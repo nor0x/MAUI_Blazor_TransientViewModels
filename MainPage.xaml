@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MauiApp1"
+             x:DataType="local:MainViewModel"
+             x:Class="MauiApp1.MainPage"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+    <Grid RowDefinitions="*,*">
+        <BlazorWebView x:Name="blazorWebView"
+                       HostPage="wwwroot/index.html"
+                       Grid.Row="0">
+            <BlazorWebView.RootComponents>
+                <RootComponent x:Name="MyBlazorWebView"
+                               Selector="#app"
+                               ComponentType="{x:Type local:Components.Routes}" />
+            </BlazorWebView.RootComponents>
+        </BlazorWebView>
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="Maui Label:"
+                   FontSize="24" />
+            <Label Text="{Binding Title}"
+                   FontSize="18" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

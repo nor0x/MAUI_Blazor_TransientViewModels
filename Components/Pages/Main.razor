@@ -1,0 +1,41 @@
+﻿@page "/"
+@using System.ComponentModel
+
+<!-- Don't inject ViewModel -->
+@* // @inject MainViewModel _mainViewModel*@
+
+@if (_mainViewModel is not null)
+{
+
+    <h3>Blazor Label:</h3>
+    <h4>@_mainViewModel.Title</h4>
+}
+
+<h4># registrations of MainViewModel:</h4>
+<ul>
+@foreach(var reg in Registrations.ViewModelRegistrations)
+{
+        <li><code>@reg</code></li>
+}
+</ul>
+
+@code {
+
+    [CascadingParameter]
+    public INotifyPropertyChanged ViewModel { get; set; }
+
+    MainViewModel _mainViewModel => ViewModel as MainViewModel;
+
+    protected override void OnInitialized()
+    {
+        _mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
+    }
+
+    private void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(MainViewModel.Title))
+        {
+            InvokeAsync(() => StateHasChanged());
+        }
+    }
+}
